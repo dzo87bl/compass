@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="">
+	<head>
+		<!-- META -->
+		<meta charset="UTF-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta http-equiv="Content-Style-Type" content="text/css" />
+		<meta http-equiv="Content-Script-Type" content="text/javascript"/>
+		<meta name="keywords" content=""/>
+		<meta name="description" content=""/>
+		<meta name="autor" content=""/>
+		<meta name="copyright" content=""/>
+		<meta name="generator" content=""/>
+		<meta name="distribution" content=""/>
+		<meta name="date" content=""/>
+		<!-- SCRIPTS -->
+		<!-- jQuery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+		<!-- Bootstrap -->
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<!-- Animate -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/animatecss/3.5.1/animate.min.css">
+		<!-- STYLE -->
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+		<title>{pagetitle}</title>
+		<!-- LINK -->
+		<link rel="shortcut icon" type="image/png" href="img/ico/favicon.png"/>
+		<!-- PLUGINS -->
+		<!-- <script src="plugins/smooth-page-scroll-to-top/smooth_scroll.js" type="text/javascript"></script> -->
+		<!-- <link rel="stylesheet" type="text/css" href="plugins/smooth-page-scroll-to-top/smooth_scroll.css"/> -->
+	</head>
+	<body>
+		<!-- main -->
+		<div class="container-fluid" id="main">
+			<div class="container">
+				<div class="col-md-12">
+					<div id="notice"></div>
+				</div>
+				<div class="col-md-9">
+					<img src="img/tpl/windrose.png" id="compass" class="img-responsive img-circle center-block" alt="compass"/>
+				</div>
+				<div class="col-md-3">
+					<br/>
+					<div class="btn-toolbar" role="toolbar" aria-label="...">
+						<div class="btn-group" role="group" aria-label="...">
+							<button type="button" class="btn btn-default">
+								<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+							</button>
+							<button type="button" class="btn btn-default">
+								<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+							</button>
+							<button type="button" class="btn btn-default">
+								<span class="glyphicon glyphicon-adjust" aria-hidden="true"></span>
+							</button>
+							<button type="button" class="btn btn-default">
+								<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+							</button>
+							<button type="button" class="btn btn-default" id="light-switch">
+								<span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+							</button>
+							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
+								<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+							</button>
+						</div>
+					</div>
+					<br/>
+					<br/>
+					<ul class="nav nav-pills nav-stacked">
+						<li role="presentation">
+							<a href="#"> Direction: <span class="badge pull-right" id="direction"></span> </a>
+						</li>
+						<li role="presentation">
+							<a href="#"> Current Location: <span class="badge pull-right" id="current_latlog"></span> </a>
+						</li>
+						<li role="presentation">
+							<a href="#"> Starting Location: <span class="badge pull-right" id="start_latlog"></span> </a>
+						</li>
+						<li role="presentation">
+							<a href="#"> Distance from starting location: <span class="badge pull-right" id="distance"></span> </a>
+						</li>
+						<li role="presentation">
+							<a href="#"> Front-Back: <span class="badge pull-right" id="tiltFB"></span> </a>
+						</li>
+						<li role="presentation">
+							<a href="#"> Left-Right: <span class="badge pull-right" id="tiltLR"></span> </a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- / main -->
+		<!-- modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Compass</h4>
+					</div>
+					<div class="modal-body">
+						For best results calibrate the accelerometer in your device by tracing out a figure of 8 in the air several times vertically and horizontally. 
+						The heading can also be affected by nearby magnetic fields.
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							OK
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- modal -->
+		<!-- <a href="#" class="scrollup">Scroll</a> -->
+		<!-- SCRIPTS -->
+		<script language="javascript" src="js/app.js"></script>
+		<script language="javascript">
+			$(document).ready(function() {
+
+			});
+		</script>
+	</body>
+</html>
